@@ -1,13 +1,13 @@
-module.exports = app => {
-    const adotante = require("../controllers/adotante.controller");
-  
-    var router = require("express").Router();
+const router = require("express").Router();
 
-    router.post("/adicionar", adotante.create);
-    router.get("/todos", adotante.findAll);
-    router.get("/buscar/:id", adotante.findOne);
-    router.get("/buscar/:nome", adotante.findByName);
-    router.put("/atualizar/:id", adotante.update);
-    router.delete("/deletar/:id", adotante.delete);
-    router.delete("/deletar/tudo", adotante.deleteAll);
-  };
+const Adotante = require("../controllers/adotante.controller");
+
+router.post("/adicionar", Adotante.create);
+router.get("/todos", Adotante.findAll);
+router.get("/buscar/:id", Adotante.findOne);
+router.get("/pesquisar/:nome", Adotante.findByName);
+router.put("/atualizar/:id", Adotante.update);
+router.delete("/deletar/:id", Adotante.delete);
+router.delete("/deletar/tudo", Adotante.deleteAll);
+
+module.exports = router;

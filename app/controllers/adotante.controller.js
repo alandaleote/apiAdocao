@@ -1,8 +1,9 @@
+
 const db = require("../models");
 const Adotante = db.adotante;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
     if(!req.body) {
         res.status(400).send({
             message: "Conteúdo do Body não pode ser vazio."
@@ -21,8 +22,12 @@ exports.create = (req, res) => {
     })
 };
 
-exports.findAll = (req, res) => {
-    Adotante.findAll().then(data => {
+exports.findAll = (req, res, next) => {
+    Adotante.findAll({
+      include: [
+        db.pet,
+      ]
+    }).then(data => {
         res.send(data);
     })
     .catch(err => {
@@ -33,10 +38,15 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+exports.findOne = (req, res, next) => {
     const id = req.params.id;
 
-    Adotante.findByPk(id).then(data => {
+    Adotante.findOne({
+      id: id,
+      include: [
+        db.pet,
+      ]
+    }).then(data => {
         res.send(data);
     })
     .catch(err => {
@@ -46,7 +56,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
     const id = req.params.id;
 
     Adotante.update(req.body, {
@@ -70,7 +80,7 @@ exports.update = (req, res) => {
       });
 };
 
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
     const id = req.params.id;
 
     Adotante.destroy(req.body, {
@@ -95,7 +105,7 @@ exports.delete = (req, res) => {
 
 };
 
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res, next) => {
     Adotante.destroy({
         where: {},
         truncate: false
@@ -111,11 +121,15 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-exports.findByName = (req, res) => {
-    const nome = req.query.nome;
-    var condition = nome ? { nome: {[Op.like]: `%${nome}%`} } : null;
-
-    Adotante.findAll({ where: { where: condition } })
+exports.findByName = (req, res, next) => {
+  const nome = req.params.nome
+  
+  Adotante.findAll({ 
+      where: { nome: { [Op.like]: '%'+nome+'%' } },
+      include: [
+        db.pet,
+      ]
+    })
       .then(data => {
         res.send(data);
       })
@@ -126,16 +140,3 @@ exports.findByName = (req, res) => {
         });
       });
   };
-
-// exports.findAllWithPet = (req, res) => {
-//     Adotante.findAll({ where: { query para pesquisar pet } })
-//       .then(data => {
-//         res.send(data);
-//       })
-//       .catch(err => {
-//         res.status(500).send({
-//           message:
-//             err.message || "Algo inesperado aconteceu."
-//         });
-//       });
-//   };

@@ -113,9 +113,10 @@ exports.deleteAll = (req, res) => {
 
 exports.findByName = (req, res) => {
     const nome = req.query.nome;
-    var condition = nome ? { nome: {[Op.like]: `%${nome}%`} } : null;
 
-    Ong.findAll({ where: { where: condition } })
+    Ong.findAll({
+      nome: {[Op.like]: `%${nome}%`}
+    })
       .then(data => {
         res.send(data);
       })
@@ -126,3 +127,21 @@ exports.findByName = (req, res) => {
         });
       });
   };
+
+exports.findPets = (req, res) => {
+    const id = req.params.id;
+
+    Ong.findOne({
+      id: id,
+      include: [
+        db.pet,
+      ]
+    }).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: "Ong não encontrada."
+        });
+    });
+};

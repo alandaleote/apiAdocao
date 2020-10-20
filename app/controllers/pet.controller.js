@@ -36,7 +36,13 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Pet.findByPk(id).then(data => {
+    Pet.findOne({
+      id: id,
+      include: [
+        db.adotante,
+        db.ong
+      ]
+    }).then(data => {
         res.send(data);
     })
     .catch(err => {
@@ -111,15 +117,47 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// exports.findAllWithPet = (req, res) => {
-//     Pet.findAll({ where: { id_adotante != null //query para pesquisar pets adotados } })
-//       .then(data => {
-//         res.send(data);
-//       })
-//       .catch(err => {
-//         res.status(500).send({
-//           message:
-//             err.message || "Algo inesperado aconteceu."
-//         });
-//       });
-//   };
+exports.findBySpecies = (req, res) => {
+  const especie = req.params.especie
+    Pet.findAll({
+      especie: {[Op.like]: `%${especie}%`}
+    }).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Algo inesperado aconteceu."
+        });
+    });
+};
+
+exports.findByGender = (req, res) => {
+  const sexo = req.params.sexo
+    Pet.findAll({
+      sexo: {[Op.like]: `%${sexo}%`}
+    }).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Algo inesperado aconteceu."
+        });
+    });
+};
+exports.findByAge = (req, res) => {
+  const idade = req.params.idade
+    Pet.findAll({
+      idade: {[Op.like]: `%${idade}%`}
+    }).then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Algo inesperado aconteceu."
+        });
+    });
+};
+

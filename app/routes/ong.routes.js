@@ -1,13 +1,14 @@
-module.exports = app => {
-    const ong = require("../controllers/ong.controller");
-  
-    var router = require("express").Router();
+const router = require("express").Router();
 
-    router.post("/adicionar", ong.create);
-    router.get("/todos", ong.findAll);
-    router.get("/buscar/:id", ong.findOne);
-    router.get("/buscar/:nome", ong.findByName);
-    router.put("/atualizar/:id", ong.update);
-    router.delete("/deletar/:id", ong.delete);
-    router.delete("/deletar/tudo", ong.deleteAll);
-  };
+const Ong = require("../controllers/ong.controller");
+
+router.post("/adicionar", Ong.create);
+router.get("/todos", Ong.findAll);
+router.get("/buscar/:id", Ong.findOne);
+router.get("/buscar/pets/:id", Ong.findPets);
+router.get("/pesquisar/:nome", Ong.findByName);
+router.put("/atualizar/:id", Ong.update);
+router.delete("/deletar/:id", Ong.delete);
+router.delete("/deletar/tudo", Ong.deleteAll);
+
+module.exports = router;

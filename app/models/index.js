@@ -21,7 +21,16 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.adotante = require('./adotante.js')(sequelize, Sequelize);
+db.ong = require('./ong.js')(sequelize, Sequelize);
+db.pet = require('./pet.js')(sequelize, Sequelize);
+
+db.pet.belongsTo(db.adotante);
+db.pet.belongsTo(db.ong);
+db.adotante.hasMany(db.pet);
+db.ong.hasMany(db.pet);
 
 module.exports = db;

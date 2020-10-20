@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Ong = sequelize.define('Ong', {
+    const Ong = sequelize.define('ong', {
       nome: DataTypes.STRING,
       email: DataTypes.STRING,
       telefone: DataTypes.STRING,
