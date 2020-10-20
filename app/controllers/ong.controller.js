@@ -1,5 +1,5 @@
 const db = require("../models");
-const Pet = db.pet;
+const Ong = db.ong;
 const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
@@ -10,7 +10,7 @@ exports.create = (req, res) => {
           return;
     }
 
-    Pet.create(req.body)
+    Ong.create(req.body)
     .then(data => { res.send(data);
     })
     .catch(err => {
@@ -22,7 +22,7 @@ exports.create = (req, res) => {
 };
 
 exports.findAll = (req, res) => {
-    Pet.findAll().then(data => {
+    Ong.findAll().then(data => {
         res.send(data);
     })
     .catch(err => {
@@ -36,12 +36,12 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
-    Pet.findByPk(id).then(data => {
+    Ong.findByPk(id).then(data => {
         res.send(data);
     })
     .catch(err => {
         res.status(500).send({
-            message: "pet não encontrado."
+            message: "Ong não encontrada."
         });
     });
 };
@@ -49,23 +49,23 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
     const id = req.params.id;
 
-    Pet.update(req.body, {
+    Ong.update(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "pet atualizado com sucesso."
+            message: "Ong atualizada com sucesso."
           });
         } else {
           res.send({
-            message: `Não foi possível atualizar pet com id=${id}. pet pode não ter sido encontrado ou req.body está vazio!`
+            message: `Não foi possível atualizar Ong com id=${id}. Ong pode não ter sido encontrada ou req.body está vazio!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Erro ao atualizar pet com id=" + id
+          message: "Erro ao atualizar Ong com id=" + id
         });
       });
 };
@@ -73,35 +73,35 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
     const id = req.params.id;
 
-    Pet.destroy(req.body, {
+    Ong.destroy(req.body, {
       where: { id: id }
     })
       .then(num => {
         if (num == 1) {
           res.send({
-            message: "pet deletado com sucesso."
+            message: "Ong deletada com sucesso."
           });
         } else {
           res.send({
-            message: `Não foi possível deletar pet com id=${id}. pet pode não ter sido encontrado ou req.body está vazio!`
+            message: `Não foi possível deletar Ong com id=${id}. Ong pode não ter sido encontrada ou req.body está vazio!`
           });
         }
       })
       .catch(err => {
         res.status(500).send({
-          message: "Erro ao deletar pet com id=" + id
+          message: "Erro ao deletar Ong com id=" + id
         });
       });
 
 };
 
 exports.deleteAll = (req, res) => {
-    Pet.destroy({
+    Ong.destroy({
         where: {},
         truncate: false
       })
         .then(nums => {
-          res.send({ message: `${nums} Todos pets deletados com sucesso!` });
+          res.send({ message: `${nums} Todas Ongs deletadas com sucesso!` });
         })
         .catch(err => {
           res.status(500).send({
@@ -111,15 +111,18 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-// exports.findAllWithPet = (req, res) => {
-//     Pet.findAll({ where: { id_adotante != null //query para pesquisar pets adotados } })
-//       .then(data => {
-//         res.send(data);
-//       })
-//       .catch(err => {
-//         res.status(500).send({
-//           message:
-//             err.message || "Algo inesperado aconteceu."
-//         });
-//       });
-//   };
+exports.findByName = (req, res) => {
+    const nome = req.query.nome;
+    var condition = nome ? { nome: {[Op.like]: `%${nome}%`} } : null;
+
+    Ong.findAll({ where: { where: condition } })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Algo inesperado aconteceu."
+        });
+      });
+  };
