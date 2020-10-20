@@ -1,27 +1,20 @@
-const { Adotante } = require('./app/models');
-const { Pet } = require('./app/models');
-const { Ong } = require('./app/models');
-const { User } = require('./app/models');
-
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
+app.use(cors);
+app.use(bodyParser.json);
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/find/:id', (req, res) => {
-  res.json('Im in register');
-});
-app.get('/findall', (req, res) => {
-  res.json('Im in Find All');
-});
+app.use("/api/adotante", require("./app/routes/adotante.routes"));
+app.use("/api/pet", require("./app/routes/pet.routes"));
+app.use("/api/ong", require("./app/routes/ong.routes"));
 
-
-
-//user.create({ name: 'Claudio', email: 'claudio@rocketseat.com.br', password: '123456' });
-
-app.listen(3000);
+app.listen(3001);

@@ -1,25 +1,13 @@
 module.exports = app => {
-    const tutorials = require("../controllers/adotante.controller.js");
+    const adotante = require("../controllers/adotante.controller");
   
     var router = require("express").Router();
-  
-    // Create a new Tutorial
-    router.post("/", adotante.create);
-  
-    // Retrieve all Tutorials
-    router.get("/todos", adotante.findAll);
 
-    // Retrieve a single Tutorial with id
-    router.get("/:id", adotante.findOne);
-  
-    // Update a Tutorial with id
-    router.put("/:id", adotante.update);
-  
-    // Delete a Tutorial with id
-    router.delete("/:id", adotante.delete);
-  
-    // Delete all Tutorials
-    router.delete("/", adotante.deleteAll);
-  
-    app.use('/api/adotante', router);
+    router.post("/adicionar", adotante.create);
+    router.get("/todos", adotante.findAll);
+    router.get("/buscar/:id", adotante.findOne);
+    router.get("/buscar/:nome", adotante.findByName);
+    router.put("/atualizar/:id", adotante.update);
+    router.delete("/deletar/:id", adotante.delete);
+    router.delete("/deletar/tudo", adotante.deleteAll);
   };
