@@ -14,7 +14,6 @@ module.exports = {
       especie: {
         allowNull: false,
         type: DataTypes.STRING,
-        unique: true,
       },
       sexo: {
         allowNull: false,

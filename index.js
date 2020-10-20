@@ -1,4 +1,8 @@
+const { Adotante } = require('./app/models');
+const { Pet } = require('./app/models');
+const { Ong } = require('./app/models');
 const { User } = require('./app/models');
+
 const express = require('express');
 
 const app = express();
