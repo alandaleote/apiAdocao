@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
 const config = require('../../config/database.js');
-const { User } = require('./app/models');
+
 
 const db = {};
 const sequelize = new Sequelize(config);
@@ -21,7 +21,7 @@ Object.keys(db).forEach((modelName) => {
   }
 });
 
-User.create({ name: 'Claudio', email: 'claudio@rocketseat.com.br', password: '123456' });
+
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
