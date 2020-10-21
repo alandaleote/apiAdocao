@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const verify = require('../../config/auth');
 const Adotante = require("../controllers/adotante.controller");
 
 router.post("/adicionar", Adotante.create);

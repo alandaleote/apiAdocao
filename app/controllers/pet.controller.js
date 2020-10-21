@@ -76,7 +76,7 @@ exports.update = (req, res) => {
       });
 };
 
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
     const id = req.params.id;
 
     Pet.destroy(req.body, {
@@ -101,7 +101,7 @@ exports.delete = (req, res) => {
 
 };
 
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res, next) => {
     Pet.destroy({
         where: {},
         truncate: false
@@ -117,7 +117,7 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-exports.findBySpecies = (req, res) => {
+exports.findBySpecies = (req, res, next) => {
   const especie = req.params.especie
     Pet.findAll({
       especie: {[Op.like]: `%${especie}%`}
@@ -132,7 +132,7 @@ exports.findBySpecies = (req, res) => {
     });
 };
 
-exports.findByGender = (req, res) => {
+exports.findByGender = (req, res, next) => {
   const sexo = req.params.sexo
     Pet.findAll({
       sexo: {[Op.like]: `%${sexo}%`}
@@ -146,7 +146,7 @@ exports.findByGender = (req, res) => {
         });
     });
 };
-exports.findByAge = (req, res) => {
+exports.findByAge = (req, res, next) => {
   const idade = req.params.idade
     Pet.findAll({
       idade: {[Op.like]: `%${idade}%`}

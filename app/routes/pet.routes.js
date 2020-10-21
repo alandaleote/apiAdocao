@@ -1,5 +1,5 @@
 const router = require("express").Router();
-
+const verify = require('../../config/auth');
 const pet = require("../controllers/pet.controller");
 
 router.post("/adicionar", pet.create);

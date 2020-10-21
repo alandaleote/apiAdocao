@@ -2,7 +2,7 @@ const db = require("../models");
 const Ong = db.ong;
 const Op = db.Sequelize.Op;
 
-exports.create = (req, res) => {
+exports.create = (req, res, next) => {
     if(!req.body) {
         res.status(400).send({
             message: "Conteúdo do Body não pode ser vazio."
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
     })
 };
 
-exports.findAll = (req, res) => {
+exports.findAll = (req, res, next) => {
     Ong.findAll().then(data => {
         res.send(data);
     })
@@ -33,7 +33,7 @@ exports.findAll = (req, res) => {
     });
 };
 
-exports.findOne = (req, res) => {
+exports.findOne = (req, res, next) => {
     const id = req.params.id;
 
     Ong.findByPk(id).then(data => {
@@ -46,7 +46,7 @@ exports.findOne = (req, res) => {
     });
 };
 
-exports.update = (req, res) => {
+exports.update = (req, res, next) => {
     const id = req.params.id;
 
     Ong.update(req.body, {
@@ -70,7 +70,7 @@ exports.update = (req, res) => {
       });
 };
 
-exports.delete = (req, res) => {
+exports.delete = (req, res, next) => {
     const id = req.params.id;
 
     Ong.destroy(req.body, {
@@ -95,7 +95,7 @@ exports.delete = (req, res) => {
 
 };
 
-exports.deleteAll = (req, res) => {
+exports.deleteAll = (req, res, next) => {
     Ong.destroy({
         where: {},
         truncate: false
@@ -111,11 +111,11 @@ exports.deleteAll = (req, res) => {
         });
 };
 
-exports.findByName = (req, res) => {
-    const nome = req.query.nome;
+exports.findByName = (req, res, next) => {
+    const nome = req.params.nome;
 
     Ong.findAll({
-      nome: {[Op.like]: `%${nome}%`}
+      where: { nome: { [Op.like]: '%'+nome+'%' } }
     })
       .then(data => {
         res.send(data);
@@ -128,7 +128,7 @@ exports.findByName = (req, res) => {
       });
   };
 
-exports.findPets = (req, res) => {
+exports.findPets = (req, res, next) => {
     const id = req.params.id;
 
     Ong.findOne({
