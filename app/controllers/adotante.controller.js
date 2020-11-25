@@ -42,7 +42,7 @@ exports.findOne = (req, res, next) => {
     const id = req.params.id;
 
     Adotante.findOne({
-      id: id,
+      where: { id: id },
       include: [
         db.pet,
       ]
