@@ -1,7 +1,4 @@
 module.exports = {
-  username: 'postgres',
-  password: '440926',
-  database: 'api_adocao',
-  host: '127.0.0.1',
-  dialect: 'postgres',
+  "type": "postgres",
+  "url": process.env.HEROKU_POSTGRESQL_NAVY_URL,
 }
