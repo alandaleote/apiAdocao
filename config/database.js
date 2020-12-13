@@ -1,4 +1,4 @@
 module.exports = {
   "type": "postgres",
-  "url": process.env.HEROKU_POSTGRESQL_NAVY_URL,
+  "url": process.env.DATABASE_URL,
 }
