@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const verify = require('../../config/auth');
 const Ong = require("../controllers/ong.controller");
 
 router.post("/adicionar", Ong.create);

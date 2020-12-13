@@ -1,7 +1,7 @@
 module.exports = {
-  "type": "postgres",
-  "url": process.env.DATABASE_URL,
-  "migrations" : [
-    "appAdocao/database/migrations/**/*.js"
-  ],
+  username: 'postgres',
+  password: '440926',
+  database: 'api_adocao',
+  host: '127.0.0.1',
+  dialect: 'postgres',
 }
