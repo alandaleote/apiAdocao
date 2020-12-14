@@ -23,12 +23,9 @@
   },
   "devDependencies": {
     "script": "0.1.4",
-    "sequelize-cli": "<6.0.0"
+    "sequelize-cli": "^5.5.1"
   },
   "engines": {
     "node": "12.18.2"
-  },
-  "production": {
-    "use_env_variable": "DATABASE_URL"
   }
 }
