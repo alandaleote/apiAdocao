@@ -1,7 +1,7 @@
 
 module.exports = {  
   "username": 'postgres',
-  "password": '440926',
+  "password": '',
   "database": 'api_adocao',
   "host": '127.0.0.1',
   "dialect": 'postgres',
